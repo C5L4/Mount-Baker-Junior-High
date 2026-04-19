@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Fun. Stuff. To. Do. When. Very. Bored.">
+    <meta name="robots" content="noindex">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="ireadylogo.png">
+    <title>Sign In</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050a18;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-color: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.4);
+            --text-color: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            cursor: url('rockon.png') 16 0, auto !important;
+            overflow-x: hidden;
+        }
+
+        /* Animated background grid */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            z-index: 0;
+            pointer-events: none;
+            animation: orbFloat 15s ease-in-out infinite alternate;
+        }
+        .orb-1 { width: 400px; height: 400px; background: #6366f1; top: -100px; left: -100px; animation-delay: 0s; }
+        .orb-2 { width: 350px; height: 350px; background: #ec4899; bottom: -80px; right: -80px; animation-delay: -5s; }
+        .orb-3 { width: 300px; height: 300px; background: #38bdf8; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -10s; }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -40px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(10px, -10px) scale(1.05); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 24px 60px;
+        }
+
+        /* Title */
+        .title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-align: center;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #e879f9, #fb923c, #38bdf8);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleGradient 8s ease infinite;
+            text-shadow: none;
+            position: relative;
+        }
+
+        .title::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #e879f9, #fb923c, #38bdf8);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleGradient 8s ease infinite;
+            filter: blur(30px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        @keyframes titleGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 36px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        /* Search bar */
+        .search-wrap {
+            max-width: 460px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .search-wrap svg {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px 14px 46px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: var(--text-color);
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input::placeholder { color: var(--text-muted); }
+        .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15), 0 0 30px rgba(56, 189, 248, 0.1);
+        }
+
+        /* Game count */
+        .game-count {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 24px;
+            transition: opacity 0.3s;
+        }
+
+        /* Grid */
+        .grid {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 14px;
+        }
+
+        /* Cards */
+        .card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 72px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            padding: 0 14px;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s;
+        }
+
+        /* Shine effect on hover */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+            transition: left 0.5s ease;
+            z-index: 0;
+        }
+
+        .card:hover::before { left: 100%; }
+
+        .card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow:
+                0 0 20px rgba(56, 189, 248, 0.15),
+                0 12px 40px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(129, 140, 248, 0.08));
+            cursor: url('rockon.png') 16 0, auto !important;
+        }
+
+        .card:hover a { color: #fff; }
+
+        .card:active { transform: translateY(-2px) scale(0.98); }
+
+        /* Hidden for search filtering */
+        .card.hidden {
+            display: none;
+        }
+
+        /* No results message */
+        .no-results {
+            display: none;
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-muted);
+            padding: 60px 20px;
+            font-size: 16px;
+        }
+
+        .no-results.visible { display: block; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+        /* Entrance animation */
+        .card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardIn 0.4s ease forwards;
+        }
+
+        @keyframes cardIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="container">
+        <h1 class="title">math</h1>
+        <p class="subtitle">yay</p>
+
+        <div class="search-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+            </svg>
+            <input type="text" class="search-input" placeholder="Search" id="searchInput" autocomplete="off">
+        </div>
+
+        <p class="game-count" id="gameCount"></p>
+
+        <ul class="grid" id="gameGrid">
+            <li class="card" style="animation-delay:.02s"><a href="2048.html" target="_blank">2048</a></li>
+            <li class="card" style="animation-delay:.04s"><a href="adarkroom/index.html" target="_blank">A Dark Room</a></li>
+            <li class="card" style="animation-delay:.06s"><a href="agariolite.html" target="_blank">Agariolite</a></li>
+            <li class="card" style="animation-delay:.08s"><a href="asteroids/index.html" target="_blank">Asteroids</a></li>
+            <li class="card" style="animation-delay:.10s"><a href="awesometanks.html" target="_blank">Awesome Tanks</a></li>
+            <li class="card" style="animation-delay:.12s"><a href="awesometanks2.html" target="_blank">Awesome Tanks 2</a></li>
+            <li class="card" style="animation-delay:.14s"><a href="baseballbros.html" target="_blank">Baseball Bros.</a></li>
+            <li class="card" style="animation-delay:.16s"><a href="basketbros.html" target="_blank">Basketball Bros.</a></li>
+            <li class="card" style="animation-delay:.18s"><a href="basketrandom.html" target="_blank">Basketball Random</a></li>
+            <li class="card" style="animation-delay:.20s"><a href="bitplanes.htm" target="_blank">Bit Planes</a></li>
+            <li class="card" style="animation-delay:.22s"><a href="blackholesquare/index.html" target="_blank">Black Hole Square</a></li>
+            <li class="card" style="animation-delay:.24s"><a href="blockysnakes.html" target="_blank">Blocky Snakes</a></li>
+            <li class="card" style="animation-delay:.26s"><a href="bloonsTD5.html" target="_blank">Bloons TD 5</a></li>
+            <li class="card" style="animation-delay:.28s"><a href="bloxorz.html" target="_blank">Bloxorz</a></li>
+            <li class="card" style="animation-delay:.30s"><a href="blumgiracers.html" target="_blank">Blumgi Racers</a></li>
+            <li class="card" style="animation-delay:.32s"><a href="blumgirocket.html" target="_blank">Blumgi Rocket</a></li>
+            <li class="card" style="animation-delay:.34s"><a href="bobtherobber2.html" target="_blank">Bob The Robber 2</a></li>
+            <li class="card" style="animation-delay:.36s"><a href="bobtherobber5.html" target="_blank">Bob The Robber 5</a></li>
+            <li class="card" style="animation-delay:.38s"><a href="breakout/index.html" target="_blank">Breakout</a></li>
+            <li class="card" style="animation-delay:.40s"><a href="boxingrandom.htm" target="_blank">Boxing Random</a></li>
+            <li class="card" style="animation-delay:.42s"><a href="chromaincident/index.html" target="_blank">Chromaincident</a></li>
+            <li class="card" style="animation-delay:.44s"><a href="clusterrush.html" target="_blank">Cluster Rush</a></li>
+            <li class="card" style="animation-delay:.46s"><a href="connect3/index.html" target="_blank">Connect 3</a></li>
+            <li class="card" style="animation-delay:.48s"><a href="cookieclicker.html" target="_blank">Cookie Clicker</a></li>
+            <li class="card" style="animation-delay:.50s"><a href="cubefield.html" target="_blank">Cube Field</a></li>
+            <li class="card" style="animation-delay:.52s"><a href="Cut Stack/index.html" target="_blank">Cut Stack</a></li>
+            <li class="card" style="animation-delay:.54s"><a href="doodle-jump/index.html" target="_blank">Doodle Jump</a></li>
+            <li class="card" style="animation-delay:.56s"><a href="dreadheadparkour.htm" target="_blank">Dread Head Parkour</a></li>
+            <li class="card" style="animation-delay:.58s"><a href="driftboss.htm" target="_blank">Drift Boss</a></li>
+            <li class="card" style="animation-delay:.60s"><a href="drivemad.htm" target="_blank">Drive Mad</a></li>
+            <li class="card" style="animation-delay:.62s"><a href="edge not found.html" target="_blank">Edge Not Found</a></li>
+            <li class="card" style="animation-delay:.64s"><a href="Elastic Morty.html" target="_blank">Elastic Morty</a></li>
+            <li class="card" style="animation-delay:.68s"><a href="escaperoad.html" target="_blank">Escape Road</a></li>
+            <li class="card" style="animation-delay:.70s"><a href="escaperoad2.html" target="_blank">Escape Road 2</a></li>            
+            <li class="card" style="animation-delay:.70s"><a href="evilglitch.html" target="_blank">Evil Glitch</a></li>
+            <li class="card" style="animation-delay:.72s"><a href="fireboywatergirl.htm" target="_blank">Fire Boy and Water Girl</a></li>
+            <li class="card" style="animation-delay:.74s"><a href="FNAE.html" target="_blank">Five Nights at Epstein's</a></li>
+            <li class="card" style="animation-delay:.76s"><a href="flappy-2048/index.html" target="_blank">Flappy 2048</a></li>
+            <li class="card" style="animation-delay:.78s"><a href="flappybird.html" target="_blank">Flappy Bird</a></li>
+            <li class="card" style="animation-delay:.80s"><a href="fruitninja.html" target="_blank">Fruit Ninja</a></li>
+            <li class="card" style="animation-delay:.82s"><a href="getawayshootout.htm" target="_blank">Getaway Shootout</a></li>
+            <li class="card" style="animation-delay:.84s"><a href="geometrydash.html" target="_blank">Geometry Dash</a></li>
+            <li class="card" style="animation-delay:.86s"><a href="gopher/index.html" target="_blank">Gopher</a></li>
+            <li class="card" style="animation-delay:.88s"><a href="holeio.html" target="_blank">Hole.io</a></li>
+            <li class="card" style="animation-delay:.90s"><a href="hextris/index.html" target="_blank">Hextris</a></li>
+            <li class="card" style="animation-delay:.92s"><a href="leveldevil.html" target="_blank">Level Devil</a></li>
+            <li class="card" style="animation-delay:.94s"><a href="monkeymart.htm" target="_blank">Monkey Mart</a></li>
+            <li class="card" style="animation-delay:.96s"><a href="motox3m.htm" target="_blank">Moto X3M</a></li>
+            <li class="card" style="animation-delay:1.00s"><a href="motox3m2.html" target="_blank">Moto X3M 2</a></li>
+            <li class="card" style="animation-delay:1.02s"><a href="motox3m3.html" target="_blank">Moto X3M 3</a></li>
+            <li class="card" style="animation-delay:1.04s"><a href="ovo.html" target="_blank">OVO</a></li>
+            <li class="card" style="animation-delay:1.06s"><a href="ovo2.html" target="_blank">OVO 2</a></li>
+            <li class="card" style="animation-delay:1.08s"><a href="paperio2.htm" target="_blank">Paper .io 2</a></li>
+            <li class="card" style="animation-delay:1.10s"><a href="polytrack.html" target="_blank">Poly Track</a></li>
+            <li class="card" style="animation-delay:1.12s"><a href="retrobowl.html" target="_blank">Retro Bowl</a></li>
+            <li class="card" style="animation-delay:1.14s"><a href="retropingpong.html" target="_blank">Retro Ping-pong</a></li>
+            <li class="card" style="animation-delay:1.16s"><a href="roadblocks/index.html" target="_blank">Roadblocks</a></li>
+            <li class="card" style="animation-delay:1.18s"><a href="rooftopsnipers.htm" target="_blank">Rooftop Snipers</a></li>
+            <li class="card" style="animation-delay:1.20s"><a href="run3.html" target="_blank">Run 3</a></li>
+            <li class="card" style="animation-delay:1.22s"><a href="Shuttledeck.html" target="_blank">Shuttledeck</a></li>
+            <li class="card" style="animation-delay:1.24s"><a href="snowrider.html" target="_blank">Snow Rider</a></li>
+            <li class="card" style="animation-delay:1.26s"><a href="snowroad.htm" target="_blank">Snow Road</a></li>
+            <li class="card" style="animation-delay:1.28s"><a href="snowball.html" target="_blank">Snowball</a></li>
+            <li class="card" style="animation-delay:1.30s"><a href="soccerrandom.htm" target="_blank">Soccer Random</a></li>
+            <li class="card" style="animation-delay:1.32s"><a href="spacecompany/index.html" target="_blank">Space Company</a></li>
+            <li class="card" style="animation-delay:1.34s"><a href="Space Garden.html" target="_blank">Space Garden</a></li>
+            <li class="card" style="animation-delay:1.36s"><a href="Space Huggers .html" target="_blank">Space Huggers</a></li>
+            <li class="card" style="animation-delay:1.38s"><a href="spacewaves.html" target="_blank">Space Waves</a></li>
+            <li class="card" style="animation-delay:1.40s"><a href="slope.html" target="_blank">Slope</a></li>
+            <li class="card" style="animation-delay:1.42s"><a href="stickmanhook.html" target="_blank">Stickman Hook</a></li>
+            <li class="card" style="animation-delay:1.44s"><a href="subway_surfers.html" target="_blank">Subway Surfers</a></li>
+            <li class="card" style="animation-delay:1.46s"><a href="sm64.html" target="_blank">Super Mario 64</a></li>
+            <li class="card" style="animation-delay:1.48s"><a href="templerun2.htm" target="_blank">Temple Run 2</a></li>
+            <li class="card" style="animation-delay:1.50s"><a href="backrooms.html" target="_blank">The Backrooms</a></li>
+            <li class="card" style="animation-delay:1.52s"><a href="thereisnog.html" target="_blank">There Is No Gm</a></li>
+            <li class="card" style="animation-delay:1.54s"><a href="timeshooter2.html" target="_blank">Time Shooter 2</a></li>
+            <li class="card" style="animation-delay:1.56s"><a href="timeshooter3.htm" target="_blank">Time Shooter 3</a></li>
+            <li class="card" style="animation-delay:1.58s"><a href="tetris/index.html" target="_blank">Tetris</a></li>
+            <li class="card" style="animation-delay:1.60s"><a href="tombofthemask.htm" target="_blank">Tomb of the Mask</a></li>
+            <li class="card" style="animation-delay:1.62s"><a href="tubejumpers.html" target="_blank">Tube Jumpers</a></li>
+            <li class="card" style="animation-delay:1.64s"><a href="tunnelrush.html" target="_blank">Tunnel Rush</a></li>
+            <li class="card" style="animation-delay:1.66s"><a href="underrun/index.html" target="_blank">Underrun</a></li>
+            <li class="card" style="animation-delay:1.68s"><a href="volleyrandom.html" target="_blank">Volleyball Random</a></li>
+            <li class="card" style="animation-delay:1.70s"><a href="vex6.htm" target="_blank">Vex 6</a></li>
+            <li class="card" style="animation-delay:1.72s"><a href="vex7.htm" target="_blank">Vex 7</a></li>
+            <li class="card" style="animation-delay:1.74s"><a href="vex8.htm" target="_blank">Vex 8</a></li>
+            <li class="card" style="animation-delay:1.76s"><a href="wordsearch.html" target="_blank">Word Search</a></li>
+            <li class="card" style="animation-delay:1.78s"><a href="pear.html" target="_blank">More Games</a></li>
+        </ul>
+     
+        <p class="no-results" id="noResults">No games found. Try a different search.</p>
+    </div>
+
+</body>
+</html>
